@@ -1,0 +1,13 @@
+{% extends '_partials/base.html' %}
+
+{% block content %}
+    <h2>Events List</h2>
+
+    {% for event in events %}
+      <div>
+        <h3><a href="{% url 'event' pk=event.pk %}">{{ event.name }}</a></h3>
+        <p><em>{{ event.start_time }} at {{ event.location }}</em></p>
+        <p> {{ event.description|truncatewords:10}}</p>
+      </div>
+    {% endfor %}
+{% endblock content %}

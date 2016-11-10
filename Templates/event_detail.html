@@ -1,0 +1,44 @@
+{% extends '_partials/base.html' %}
+{% block content %}
+    <h3>{{ event.name }}</h3>
+    <p>
+      {% if event.capacity %}
+      <b>Capacity: </b>{{ event.capacity}}
+      {% endif %}
+    </p>
+    <p>{{ event.description }}</p>
+    <dl>
+      <dt>When:</dt>
+      <dd>{{ event.start_time }}</dd>
+      <dt>Where:</dt>
+      <dd>{{ event.location }}</dd>
+      <dt>Price:</dt>
+      <dd>
+        {% if event.price %}
+          ${{event.price}}
+        {% else %}
+          Free
+        {% endif %}
+      </dd>
+    </dl>
+    {% if event.owner == user %}
+    <p>
+      <a class="button" href="{% url 'event_edit' pk=event.pk %}">Edit Event</a>
+      <a class="button delete" href="{% url 'event_delete' pk=event.pk %}">Delete Event</a>
+    </p>
+    {% endif %}
+{% endblock content %}
+{% block scripts %}
+<script>
+  var deleteButton = document.querySelector('a.delete');
+
+  deleteButton.addEventListener('click', function(e) {
+    var confirmed = window.confirm('Are you sure you want to delete this event?');
+
+    if ( !confirmed ) {
+      e.preventDefault();
+      return false;
+    };
+  });
+</script>
+{% endblock scripts %}
